@@ -1,25 +1,25 @@
-import logo from './logo.svg';
+import React, { Suspense, lazy } from 'react';
+import {BrowserRouter as Router, Link, Route, Switch} from 'react-router-dom';
+
+import MainPage from './main';
 import './App.css';
 
+const SecondaryPage = lazy(() => import('./secondary'));
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Router>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                        <Route exact path="/" component={MainPage}/>
+                        <Route path="/secondary" component={SecondaryPage}/>
+                    </Switch>
+                </Suspense>
+                <Link to="/secondary">secondary link</Link>
+            </Router>
+        </div>
+    );
 }
 
 export default App;
